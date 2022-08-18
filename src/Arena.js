@@ -43,29 +43,29 @@ class Arena {
    * @param {String} direction
    * @returns Object with Number
    */
-  move(direction) {
-    let y = this.hero.y;
-    let x = this.hero.x;
-    if (direction === "N") this.hero.y -= 1;
-    if (direction === "S") this.hero.y += 1;
-    if (direction === "E") this.hero.x -= 1;
-    if (direction === "W") this.hero.x += 1;
+  move(direction, fighter) {
+    let y = fighter.y;
+    let x = fighter.x;
+    if (direction === "N") fighter.y -= 1;
+    if (direction === "S") fighter.y += 1;
+    if (direction === "E") fighter.x -= 1;
+    if (direction === "W") fighter.x += 1;
 
-    const tile = this.getTile(this.hero.x, this.hero.y);
+    const tile = this.getTile(fighter.x, fighter.y);
 
-    if (!this.checkOnMap(this.hero.x, this.hero.y)) {
+    if (!this.checkOnMap(fighter.x, fighter.y)) {
       this.message = "Moving outside the map is not possible";
-    } else if (this.CheckNoMonster(this.hero)) {
+    } else if (this.CheckNoMonster(fighter)) {
       this.message = "Position already used, you can t move here";
-    } else if (tile[0] && !tile[0].crossable) {
+    } else if (tile[0] && !tile[0].isCrossable(fighter)) {
       this.message = "Moving over is not possible";
     } else {
       return { x, y };
     }
 
     document.getElementById('error').innerHTML = this.message;
-    this.hero.x = x;
-    this.hero.y = y;
+    fighter.x = x;
+    fighter.y = y;
   }
 
   /**
@@ -74,7 +74,19 @@ class Arena {
    * @param {Object} hero
    */
   globalMove(direction, hero) {
-    this.move(direction);
+    const newPosition = this.move(direction, hero);
+    
+    if (newPosition != undefined) {
+      this.monsters.forEach((monster) => {
+        if (monster.moveable) {
+          let newMonsterPosition = undefined;
+          while(newMonsterPosition === undefined){
+            newMonsterPosition = this.move(monster.getDirection(), monster);
+          }
+        }
+      });
+    }
+
   }
 
   /**
@@ -117,7 +129,7 @@ class Arena {
     if (this.isTouchable(arena.hero, arena.monsters[id])) {
       arena.hero.fight(arena.monsters[id]);
 
-      if (this.isTouchable(arena.monsters[id], arena.hero && arena.monsters[id].isAlive())) {
+      if (this.isTouchable(arena.monsters[id], arena.hero) && arena.monsters[id].isAlive()) {
         arena.monsters[id].fight(arena.hero);
       }
 

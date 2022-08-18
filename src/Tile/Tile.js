@@ -5,4 +5,8 @@ class Tile {
     this.image = "";
     this.crossable = true;
   }
+
+  isCrossable(fighter) {
+    return this.crossable;
+  }
 }

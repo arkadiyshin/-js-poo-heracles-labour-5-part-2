@@ -6,6 +6,7 @@ class Hero extends Fighter {
     this.strength = 20;
     this.dexterity = 6;
     this.image = './images/heracles.svg';
+    this.moveable = true;
   }
 
   /**

@@ -11,6 +11,7 @@ class Fighter {
     this.y = y;
     this.range = 1;
     this.experience = 1000;
+    this.moveable = false;
   }
 
 

@@ -4,4 +4,8 @@ class Bush extends Tile {
     this.image = "./images/bush.png";
     this.crossable = false;
   }
+
+  isCrossable(fighter) {
+    return fighter instanceof Hind ? true : this.crossable;
+  }
 }

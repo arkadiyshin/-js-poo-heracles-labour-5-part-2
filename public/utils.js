@@ -266,7 +266,7 @@ class ArenaTemplate extends TemplateRoot {
         event.preventDefault();
 
         arena.globalMove(directions[keyName], arena.hero);
-        console.log(arena)
+        //console.log(arena)
         this.createArena(arena);
         this.setMonsterClick(arena);
       }

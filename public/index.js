@@ -11,7 +11,8 @@ heracles.shield = shield;
 
 
 /** Creating all of his adversaries */
-const Ceryneian = new Monster('🐴 Ceryneian Hind', 9, 6);
+const Ceryneian = new Monster('🐴 Ceryneian Hind', 9, 7);
+const Deer = new Hind('🐴 Ceryneian Hind', 9, 6);
 
 /** Creating the hero section in the html */
 const fighterHtml = new FightersTemplate('fighters');
@@ -19,7 +20,7 @@ fighterHtml.createTemplate(heracles, Ceryneian);
 
 
 /** Creating the arena place  */
-const arena = new Arena(heracles, [Ceryneian])
+const arena = new Arena(heracles, [Ceryneian, Deer])
 const ArenaHTML = new ArenaTemplate('arena');
 ArenaHTML.setMoveEvent(arena);
 ArenaHTML.setMonsterClick(arena);
